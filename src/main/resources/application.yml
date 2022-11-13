@@ -8,7 +8,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: none  # create: app 실행 시점에 entity 전부 지우고 다시 만들기
+      ddl-auto: create  # create: app 실행 시점에 entity 전부 지우고 다시 만들기
     properties:
       hibernate:
 #        show_sql: true -> 여기는 system out으로 보임

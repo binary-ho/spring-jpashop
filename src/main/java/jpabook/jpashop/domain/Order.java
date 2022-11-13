@@ -12,11 +12,13 @@ import java.util.List;
 
 @Entity
 @Table(name = "orders")
-@Getter @Setter
+@Getter
+@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Order {
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     @Column(name = "order_id")
     private Long id;
 
@@ -51,12 +53,10 @@ public class Order {
         this.delivery = delivery;
         delivery.setOrder(this);
     }
-    
+
     //==생성 메서드==//
     public static Order createOrder(Member member, Delivery delivery, OrderItem... orderItems) {
         Order order = new Order();
-
-        // Order 생성하기
         order.setMember(member);
         order.setDelivery(delivery);
         for (OrderItem orderItem : orderItems) {
@@ -69,8 +69,8 @@ public class Order {
 
     //==비즈니스 로직==//
     /*
-    * 주문 취소
-    * */
+     * 주문 취소
+     * */
     public void cancel() {
         if (delivery.getStatus() == DeliveryStatus.COMPLETE) {
             throw new IllegalStateException("이미 배송이 완료되어 취소가 불가능합니다.");
@@ -84,11 +84,11 @@ public class Order {
 
     //==조회 로직==//
     /*
-    * 전체 주문 가격 조회하기
-    */
+     * 전체 주문 가격 조회하기
+     */
     public int getTotalPrice() {
         return orderItems.stream()
-                .mapToInt(OrderItem::getTotalPrice)
-                .sum();
+            .mapToInt(OrderItem::getTotalPrice)
+            .sum();
     }
 }

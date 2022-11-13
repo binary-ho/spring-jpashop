@@ -22,13 +22,24 @@ public class OrderRepository {
     }
 
     public List<Order> findAll(OrderSearch orderSearch) {
-        return em.createQuery("select o from Order as o join o.member as m " +
-                        "where o.status = :status " +
-                        "and m.name like :name", Order.class)
-                .setParameter("status", orderSearch.getOrderStatus())
-                .setParameter("name", orderSearch.getMemberName())
-                .setFirstResult(100)
-                .setMaxResults(1000)
-                .getResultList();
+        return em.createQuery("select o from Order o", Order.class)
+            .getResultList();
     }
+
+    public List<Order> findAllWithMemberDelivery() {
+        return em.createQuery(
+            "select o from Order as o join fetch o.member m join fetch o.delivery d", Order.class)
+            .getResultList();
+    }
+
+//    public List<Order> findAll(OrderSearch orderSearch) {
+//        return em.createQuery("select o from Order as o join o.member as m " +
+//                        "where o.status = :status " +
+//                        "and m.name like :name", Order.class)
+//                .setParameter("status", orderSearch.getOrderStatus())
+//                .setParameter("name", orderSearch.getMemberName())
+//                .setFirstResult(100)
+//                .setMaxResults(1000)
+//                .getResultList();
+//    }
 }
