@@ -33,6 +33,27 @@ public class OrderRepository {
             .getResultList();
     }
 
+    // XToOne 관계는 아무리 fetch join 해도 문제가 없어
+    public List<Order> findAllWithMemberDelivery(int offset, int limit) {
+        return em.createQuery(
+                "select o from Order as o join fetch o.member m join fetch o.delivery d", Order.class)
+            .setFirstResult(offset)
+            .setMaxResults(limit)
+            .getResultList();
+    }
+
+    public List<Order> findAllWithItem() {
+        return em.createQuery(
+                "select distinct o from Order o"
+                    + " join fetch o.member m"
+                    + " join fetch o.delivery d"
+                    + " join fetch o.orderItems oi"
+                    + " join fetch oi.item i", Order.class)
+            .getResultList();
+    }
+
+
+
 //    public List<Order> findAll(OrderSearch orderSearch) {
 //        return em.createQuery("select o from Order as o join o.member as m " +
 //                        "where o.status = :status " +
