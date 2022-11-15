@@ -36,7 +36,9 @@ public class OrderRepository {
     // XToOne 관계는 아무리 fetch join 해도 문제가 없어
     public List<Order> findAllWithMemberDelivery(int offset, int limit) {
         return em.createQuery(
-                "select o from Order as o join fetch o.member m join fetch o.delivery d", Order.class)
+                "select o from Order as o"
+                    + " join fetch o.member m"
+                    + " join fetch o.delivery d", Order.class)
             .setFirstResult(offset)
             .setMaxResults(limit)
             .getResultList();
