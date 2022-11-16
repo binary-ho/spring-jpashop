@@ -13,6 +13,7 @@ import jpabook.jpashop.repository.order.query.OrderFlatDto;
 import jpabook.jpashop.repository.order.query.OrderItemQueryDto;
 import jpabook.jpashop.repository.order.query.OrderQueryDto;
 import jpabook.jpashop.repository.order.query.OrderQueryRepository;
+import jpabook.jpashop.service.query.OrderQueryService;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -132,6 +133,16 @@ public class OrderApiController {
                     .getOrderDate(), entry.getKey().getOrderStatus(), entry.getKey().getAddress(),
                 entry.getValue()))
             .collect(Collectors.toList());
+    }
+
+    // V7! OSIV
+    // V3랑 매우 유사한 버전
+    
+    private final OrderQueryService orderQueryService;
+    
+    @GetMapping("/api/v7/orders")
+    public List<jpabook.jpashop.service.query.OrderDto> orderV7() {
+        return orderQueryService.orderV7();
     }
 
 //    @GetMapping("/api/vi/orders")
