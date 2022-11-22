@@ -28,8 +28,8 @@ public class MemberApiController {
     public Result membersV2() {
         List<Member> members = memberService.findAllMembers();
         List<MemberDto> collect = members.stream()
-                .map(member -> new MemberDto(member.getName())).
-                collect(Collectors.toList());
+            .map(member -> new MemberDto(member.getName()))
+            .collect(Collectors.toList());
         return new Result(collect.size(), collect);
     }
 

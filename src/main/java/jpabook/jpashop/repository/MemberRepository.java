@@ -1,43 +1,12 @@
 package jpabook.jpashop.repository;
 
+import java.util.Optional;
 import jpabook.jpashop.domain.Member;
-import lombok.RequiredArgsConstructor;
-import net.bytebuddy.agent.builder.AgentBuilder;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import java.util.List;
+public interface MemberRepository extends JpaRepository<Member, Long> {
 
-@Repository
-//@RequiredArgsConstructor
-public class MemberRepository {
-
-    @PersistenceContext
-    private final EntityManager em;
-
-    @Autowired
-    public MemberRepository(EntityManager em) {
-        this.em = em;
-    }
-
-    public void save(Member member) {
-        em.persist(member);
-    }
-
-    public Member findOne(Long id) {
-        return em.find(Member.class, id);
-    }
-
-    public List<Member> findAll() {
-        return em.createQuery("select m from Member m", Member.class)
-                .getResultList();
-    }
-
-    public List<Member> findByName(String name) {
-        return em.createQuery("select m from Member as m where m.name = :name", Member.class)
-                .setParameter("name", name)
-                .getResultList();
-    }
+    public Optional<Member> findById(Long id);
+    public Optional<Member> findByName(String name);
+    public Member findOne(Long id);
 }
